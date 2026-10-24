@@ -1,0 +1,1 @@
+var e=(e,t=document)=>t.querySelector(e),t=(e,t=document)=>Array.from(t.querySelectorAll(e));export{t as n,e as t};
