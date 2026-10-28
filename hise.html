@@ -184,15 +184,7 @@
     <span class="m-card__more">Oglejte si <span class="arrow" aria-hidden="true">→</span></span>
   </span>
 </a></div>
-</section></div><section class="m-band">
-  <div class="container m-band__inner">
-    <div>
-      <h2 class="m-band__title">Kmalu: family 100</h2>
-      <p class="m-band__desc">Velike družinske hiše. Pustite e-pošto in obvestimo vas prvi.</p>
-    </div>
-    <a class="btn m-band__btn" href="kontakt.html#povprasevanje">Obvestite me <span class="arrow" aria-hidden="true">→</span></a>
-  </div>
-</section></div><div data-group="pisarne" hidden><div class="container"><section class="m-series" id="pisarne" data-first="1">
+</section></div></div><div data-group="pisarne" hidden><div class="container"><section class="m-series" id="pisarne" data-first="1">
   <div class="m-series__aside">
     <span class="label">Serija</span>
     <h2 class="m-series__title">pisarne</h2>
@@ -332,10 +324,25 @@
     });
   }
 
+  var SERIES_GROUP = { 'mini-20':'hise', 'eko-25':'hise', 'smart-50':'hise', 'pisarne':'pisarne', 'vrt':'vrt' };
+
+  function goToHash(){
+    var h=(location.hash||'').replace('#','');
+    if(!h) return;
+    if(h==='hise'||h==='pisarne'||h==='vrt'){ showGroup(h); return; }
+    var g=SERIES_GROUP[h];
+    if(g){
+      showGroup(g);
+      var el=document.getElementById(h);
+      if(el && el.scrollIntoView) el.scrollIntoView({block:'start'});
+    }
+  }
+
   tabs.forEach(function(t){
     t.addEventListener('click', function(){
-      showGroup(t.getAttribute('data-tab'));
-      if(history.replaceState) history.replaceState(null,'','#'+t.getAttribute('data-tab'));
+      var k=t.getAttribute('data-tab');
+      showGroup(k);
+      if(history.replaceState) history.replaceState(null,'','#'+k);
     });
   });
 
@@ -347,8 +354,8 @@
     });
   });
 
-  var hash=(location.hash||'').replace('#','');
-  if(hash==='pisarne'||hash==='vrt'||hash==='hise') showGroup(hash);
+  window.addEventListener('hashchange', goToHash);
+  goToHash();
   applySize();
 })();
 </script>
